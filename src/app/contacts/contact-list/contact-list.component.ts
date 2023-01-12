@@ -8,6 +8,7 @@ import { Contact } from '../contact.model.ts';
 })
 export class ContactListComponent {
   contacts: Contact[] =[
-    new Contact('1234', 'Gorden', 'myEmail@gamil.com', '2468-345-6789', 'https://www.scrolldroll.com/wp-content/uploads/2021/12/best-gordon-ramsay-memes-2.jpg', 'cooking')
+    new Contact('1', 'R. Kent Jackson', 'jacksonk@byui.edu', '208-496-3771', '../../assets/images/jacksonk.jpg', 'null'),
+    new Contact('2', 'Rex Barzee', 'barzeer@byui.edu', '208-496-3768', '../../assets/images/barzeer.jpg', 'null')
   ];
 }
