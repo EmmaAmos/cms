@@ -1,34 +1,19 @@
 <div class="row">
     <div class="col-xs-12">
-        <img src="" alt="" class="img-responsive">
+        <img src="" alt="">
     </div>
-    <div class="row">
-        <div class="col-xs-12">
-            <h1>Contact Details</h1>
+    <div class="gridContainer">
+        <div class="col-xs-12 header" *ngFor="let contact of contacts">
+            <h1 class="headerfont Item1">{{contact.name}}</h1>
+
+            <button class="Item2">Edit</button>
+            <button class="Item3">Delete</button>
+
+            <img class="Item4" [src]="contact.imageUrl" alt="{{contact.name}}">
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-xs-12">
-        <div class="btn-group">
-            <button type="button" class="btn btn-primary dropdown-toggle">Manage Contacts 
-                <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu">
-                <li><a href="#">Add Contact</a></li>
-                <li><a href="#">Edit Contact</a></li>
-                <li><a href="#">Delete Contact</a></li>
-            </ul>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-xs-12">
-        Phone
-    </div>
-</div>
-<div class="row">
-    <div class="col-xs-12">
-        Email
-    </div>
+<div style="border: 1px solid black;" *ngFor="let contact of contacts">
+    <p>Phone: {{contact.phone}}</p>
+    <p>Email: {{contact.email}}</p> 
 </div>
