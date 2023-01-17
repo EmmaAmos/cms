@@ -6,15 +6,6 @@
 </div>
 <div class="row">
     <div class="col-xs-12">
-        <a href="#" class="list-group-item clearfix" *ngFor="let contact of contacts">
-            <div class="pull-left">
-                <h4 class="list-group-item-heading">{{contact.name}}</h4>
-            </div>
-            <span class="pull-right">
-                <img class="img-responsive"
-                    [src]="contact.imageUrl"
-                    alt="{{contact.name}}" >
-            </span>                   
-        </a>      
+     <app-contact-item *ngFor="let contactEL of contacts" [contact]="contactEL"></app-contact-item>
     </div>
 </div>
