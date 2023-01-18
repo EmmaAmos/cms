@@ -9,7 +9,7 @@ import { Contact } from '../contact-list.model';
 })
 export class ContactItemComponent {
 
-  @Input() contact: Contact;
+  @Input() contact!: Contact;
 
   constructor() {}
 }
