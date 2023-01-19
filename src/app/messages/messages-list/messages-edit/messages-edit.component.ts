@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Output, ViewChild, ViewChildren } from '@angular/core';
 
 import { Messages } from '../../messages.model';
 
@@ -9,20 +9,20 @@ import { Messages } from '../../messages.model';
 })
 export class MessagesEditComponent {
 
-  @ViewChild('idInput') idInputRef!: ElementRef;
+  @ViewChildren('idInput') idInputRef!: ElementRef;
   @ViewChild('subjectInput') subjectInputRef!: ElementRef;
   @ViewChild('messageInput') messageInputRef!: ElementRef;
-  @ViewChild('senderInput') senderInputRef!: ElementRef;
+  @ViewChildren('senderInput') senderInputRef!: ElementRef;
   @Output() messageAdded = new EventEmitter<Messages>();
 
 
   onAddItem() {
-    const ingID = this.idInputRef.nativeElement.value;
+    const ingID = this.idInputRef.nativeElement;
     const ingSubject = this.subjectInputRef.nativeElement.value;
     const ingMessage = this.messageInputRef.nativeElement.value;
-    const ingSender = this.senderInputRef.nativeElement.value;
+    const ingSender = this.senderInputRef.nativeElement;
 
-    const newMessage = new Messages(ingID,ingSubject, ingMessage, ingSender);
+    const newMessage = new Messages(ingID, ingSubject, ingMessage, ingSender);
     this.messageAdded.emit(newMessage);
   }
 }

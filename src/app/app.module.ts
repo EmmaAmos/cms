@@ -10,8 +10,6 @@ import { ContactListComponent } from './contacts/contact-list/contact-list.compo
 import { ContactDetailComponent } from './contacts/contact-detail/contact-detail.component';
 import { ContactItemComponent } from './contacts/contact-list/contact-item/contact-item.component';
 import { DocumentsComponent } from './documents/documents.component';
-
-
 import { MessagesComponent } from './messages/messages.component';
 import { MessagesItemComponent } from './messages/messages-item/messages-item.component';
 import { MessagesEditComponent } from './messages/messages-list/messages-edit/messages-edit.component';
