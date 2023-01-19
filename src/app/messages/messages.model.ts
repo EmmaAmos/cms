@@ -1,5 +1,5 @@
 export class Messages {
-    public id: string;
+    protected id: string;
     public subject: string;
     public msgText: string;
     public sender: string;
