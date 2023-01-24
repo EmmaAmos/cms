@@ -6,6 +6,6 @@
 </div>
 <div class="row">
     <div class="col-xs-12">
-     <app-contact-item *ngFor="let contactEL of contacts" [contact]="contactEL"></app-contact-item>
+     <app-contact-item *ngFor="let contactEL of contacts" [contact]="contactEL" (contactSelected)="onContactSelected(contactEL)"></app-contact-item>
     </div>
 </div>

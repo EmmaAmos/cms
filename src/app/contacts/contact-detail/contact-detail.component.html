@@ -1,11 +1,11 @@
 <div class="list-group-item clearfix" style="background-color: antiquewhite;">
-    <div class="row" style="border: 1px soild black; background-color: antiquewhite;"  *ngFor="let contact of contacts">
+    <div class="row" style="border: 1px soild black; background-color: antiquewhite;">
         <h1 class="headerfont Item1">{{contact.name}}</h1>
 
     </div>
     <div class="row" style="background-color: antiquewhite;">
-        <div class="col-xs-12" *ngFor="let contact of contacts" style="display: inline-flex;" >
-            <div *ngFor="let contact of contacts">
+        <div class="col-xs-12" style="display: inline-flex;" >
+            <div>
                 <img class="img-responsive"
                 [src]="contact.imageUrl"
                 alt="{{contact.name}}" >
@@ -13,7 +13,7 @@
             <br>
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="btn-group">
+                    <div class="btn-group" appDropDownDirective>
                         <button type="button" class="btn btn-success" style="margin-left: 25px; margin-top: 145px; background-color: blue;">Edit</button>
                         <button type="button" class="btn btn-success" style="margin-left: 27px; margin-top: 145px; background-color: red;">Delete</button>
                     </div>
@@ -24,7 +24,7 @@
     </div>
 </div>
 
-<div class="list-group-item clearfix" *ngFor="let contact of contacts">
+<div class="list-group-item clearfix">
     <p>Phone: {{contact.phone}}</p>
     <p>Email: {{contact.email}}</p> 
 </div>
