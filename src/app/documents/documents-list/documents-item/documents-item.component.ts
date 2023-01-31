@@ -1,4 +1,5 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, } from '@angular/core';
+import { DocumentsServiceService } from '../../documents-service.service';
 
 import { Documents } from '../../documents.model';
 
@@ -11,13 +12,11 @@ export class DocumentsItemComponent {
 
   @Input() document!: Documents;
 
-  @Output() documentSelected = new EventEmitter<void>();
-
   
 
-  constructor() {}
+  constructor(private documentService: DocumentsServiceService) {}
 
   onSelected() {
-    this.documentSelected.emit();
+    this.documentService.documentSelected.emit(this.document);
   }
 }

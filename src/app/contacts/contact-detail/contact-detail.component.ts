@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Contact } from '../contact-detail/contacts-detail.model';
+import { Contact } from '../contact-list/contact-list.model';
 
 
 @Component({
@@ -12,6 +12,6 @@ export class ContactDetailComponent {
   @Input() contact!: Contact;
 
   contacts: Contact[] =[
-    new Contact('1', 'R. Kent Jackson', 'jacksonk@byui.edu', '208-496-3771', '../../assets/images/jacksonk.jpg', 'null'),
+    new Contact('1', 'R. Kent Jackson', 'jacksonk@byui.edu', '208-496-3771', '../../assets/images/jacksonk.jpg', []),
   ];
 }

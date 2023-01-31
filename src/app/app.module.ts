@@ -18,6 +18,9 @@ import { DocumentsDetailComponent } from './documents/documents-detail/documents
 import { DocumentsListComponent } from './documents/documents-list/documents-list.component';
 import { DocumentsItemComponent } from './documents/documents-list/documents-item/documents-item.component';
 import { DropDownDirectiveDirective } from './header/drop-down.directive.directive';
+import { ContactsServiceService } from './contacts/contacts-service.service';
+import { ContactsEditComponent } from './contacts/contacts-edit/contacts-edit.component';
+import { DocumentsServiceService } from './documents/documents-service.service';
 
 @NgModule({
   declarations: [
@@ -35,14 +38,15 @@ import { DropDownDirectiveDirective } from './header/drop-down.directive.directi
     DocumentsDetailComponent,
     DocumentsListComponent,
     DocumentsItemComponent,
-    DropDownDirectiveDirective
+    DropDownDirectiveDirective,
+    ContactsEditComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule
   ],
-  providers: [],
+  providers: [ContactsServiceService, DocumentsServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
