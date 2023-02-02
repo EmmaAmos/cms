@@ -32,6 +32,6 @@ export class MessagesEditComponent {
 
     const newMessage = new Messages(ingID, ingSubject, ingMessage, ingSender);
     this.messageServices.addMessage(newMessage);
-    console.log('Message-edit is working')
+    console.log('Message-edit is working');
   }
 }

@@ -3,6 +3,8 @@
         <form id="document-edit">
             <div class="row">
                 <div class="col-sm-12 form-group">
+                        <h1 #idInput></h1>
+                        <h1 #senderInput></h1>
                         <label for="subject">Subject</label>
                         <input type="text" id="subject" class="form-control" size="120" max="120" #subjectInput>
                     </div>
@@ -15,7 +17,7 @@
                 </div>
                 <div class="row">
                 <div class="col-xs-12">
-                    <button class="btn btn-success" type="submit">Send</button>
+                    <button class="btn btn-success" type="submit" (click)="onAddItem()">Send</button>
                     <button class="btn btn-danger" type="button">Clear</button>
                 </div>
             </div>
