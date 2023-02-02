@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { MessagesServiceService } from './messages-service.service';
+
+import { Messages } from './messages.model';
 
 @Component({
   selector: 'app-messages',
@@ -6,5 +9,20 @@ import { Component } from '@angular/core';
   styleUrls: ['./messages.component.css']
 })
 export class MessagesComponent {
+  message: Messages[] =[];
+/*
+  constructor(private messageService: MessagesServiceService) {
 
+  }
+
+  ngOnInit() {
+      this.message = this.messageService.getMessages();
+      this.messageService.messageChanged
+        .subscribe((
+          message: Messages[]) => {
+            this.message = message;
+          }
+        );
+  }
+  */
 }

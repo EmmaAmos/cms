@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { DocumentsServiceService } from './documents-service.service';
 
 import { Documents } from './documents.model';
@@ -17,10 +17,10 @@ export class DocumentsComponent {
 
   }
 
-ngOnInit() {
-  this.documentService.documentSelected
-    .subscribe((document: Documents) =>{
-      this.selectedDocument = document;
-    });
-}
+  ngOnInit() {
+    this.documentService.documentSelected
+      .subscribe((document: Documents) =>{
+        this.selectedDocument = document;
+      });
+  }
 }

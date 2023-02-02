@@ -10,6 +10,7 @@ import { ContactsServiceService } from './contacts-service.service';
   providers: [ContactsServiceService]
 })
 export class ContactsComponent {
+  contacts!: Contact[];
   selectedContact!: Contact;
 
     constructor(private contactService: ContactsServiceService) {

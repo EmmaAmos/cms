@@ -19,9 +19,13 @@ export class ContactsServiceService {
     return this.contacts.slice();
   }
 
-  getContact(id: string) {
-    Contact
-      
+  getContact(id: string) : Contact {
+    for (let contact of this.contacts) {
+      if(contact.id == id) {
+         return contact;
+      }
+    }
+    return null!;
   }
 
   addContact(contacts: Contact) {

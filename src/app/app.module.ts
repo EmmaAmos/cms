@@ -21,6 +21,7 @@ import { DropDownDirectiveDirective } from './header/drop-down.directive.directi
 import { ContactsServiceService } from './contacts/contacts-service.service';
 import { ContactsEditComponent } from './contacts/contacts-edit/contacts-edit.component';
 import { DocumentsServiceService } from './documents/documents-service.service';
+import { MessagesServiceService } from './messages/messages-service.service';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,7 @@ import { DocumentsServiceService } from './documents/documents-service.service';
     AppRoutingModule,
     FormsModule
   ],
-  providers: [ContactsServiceService, DocumentsServiceService],
+  providers: [ContactsServiceService, DocumentsServiceService, MessagesServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

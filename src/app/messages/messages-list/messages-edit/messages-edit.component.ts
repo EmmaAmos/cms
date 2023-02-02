@@ -1,6 +1,8 @@
-import { Component, ElementRef, EventEmitter, Output, ViewChild, ViewChildren } from '@angular/core';
-
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { MessagesServiceService } from '../../messages-service.service';
 import { Messages } from '../../messages.model';
+
+
 
 @Component({
   selector: 'app-messages-edit',
@@ -9,20 +11,27 @@ import { Messages } from '../../messages.model';
 })
 export class MessagesEditComponent {
 
-  @ViewChildren('idInput') idInputRef!: ElementRef;
+  @ViewChild('idInput') idInputRef!: ElementRef;
   @ViewChild('subjectInput') subjectInputRef!: ElementRef;
   @ViewChild('messageInput') messageInputRef!: ElementRef;
-  @ViewChildren('senderInput') senderInputRef!: ElementRef;
-  @Output() messageAdded = new EventEmitter<Messages>();
+  @ViewChild('senderInput') senderInputRef!: ElementRef;
 
+  constructor(private messageServices: MessagesServiceService) {
+
+  }
+
+  onSendMessage(message: Messages){
+    this.messageServices.addMessage(message)
+  }
 
   onAddItem() {
-    const ingID = this.idInputRef.nativeElement;
+    const ingID = this.idInputRef.nativeElement.value;
     const ingSubject = this.subjectInputRef.nativeElement.value;
     const ingMessage = this.messageInputRef.nativeElement.value;
-    const ingSender = this.senderInputRef.nativeElement;
+    const ingSender = this.senderInputRef.nativeElement.value;
 
     const newMessage = new Messages(ingID, ingSubject, ingMessage, ingSender);
-    this.messageAdded.emit(newMessage);
+    this.messageServices.addMessage(newMessage);
+    console.log('Message-edit is working')
   }
 }
