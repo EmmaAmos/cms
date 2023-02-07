@@ -1,4 +1,5 @@
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DocumentsServiceService } from '../documents-service.service';
 
 import { Documents } from '../documents.model';
@@ -18,7 +19,7 @@ export class DocumentsListComponent {
     this.documentWasSelceted.emit(document);
   }
 
-  constructor(private documentService: DocumentsServiceService){
+  constructor(private documentService: DocumentsServiceService, private route: ActivatedRoute, private router: Router){
 
   }
 
@@ -28,5 +29,9 @@ export class DocumentsListComponent {
       .subscribe((documents: Documents[]) =>{
         this.documents = documents;
       })
+  }
+
+  onNewDocument() {
+    this.router.navigate(['newDocument'], {relativeTo: this.route});
   }
 }

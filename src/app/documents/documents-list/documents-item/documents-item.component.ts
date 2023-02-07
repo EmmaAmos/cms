@@ -12,11 +12,10 @@ export class DocumentsItemComponent {
 
   @Input() document!: Documents;
 
+  @Input() index!: number;
+
   
 
   constructor(private documentService: DocumentsServiceService) {}
 
-  onSelected() {
-    this.documentService.documentSelected.emit(this.document);
-  }
 }

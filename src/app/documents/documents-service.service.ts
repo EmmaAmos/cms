@@ -20,9 +20,17 @@ export class DocumentsServiceService {
     return this.documents.slice();
   }
 
-  getDocument(id: string) {
-    Documents
-      
+  getDocument(id: string) : Documents {
+    for (let document of this.documents) {
+      if(document.id == id) {
+         return document;
+      }
+    }
+    return null!;
+  }
+
+  getSingleDocument(id: number){
+    return this.documents[id];
   }
 
   addDocument(documents: Documents) {
