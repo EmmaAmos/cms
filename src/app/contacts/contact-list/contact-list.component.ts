@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Contact } from '../contact-list/contact-list.model';
 import { ContactsServiceService } from '../contacts-service.service';
 
@@ -7,11 +8,11 @@ import { ContactsServiceService } from '../contacts-service.service';
   templateUrl: './contact-list.component.html',
   styleUrls: ['./contact-list.component.css']
 })
-export class ContactListComponent {
+export class ContactListComponent implements OnInit{
 
   contacts!: Contact[];
 
-  constructor(private contactsService: ContactsServiceService){
+  constructor(private contactsService: ContactsServiceService, private router: Router, private route: ActivatedRoute){
 
   }
 
@@ -22,6 +23,10 @@ export class ContactListComponent {
       .subscribe((contacts: Contact[]) =>{
         this.contacts = contacts;
       })
+  }
+
+  onNewContact() {
+    this.router.navigate(['newContact'], {relativeTo: this.route});
   }
 
 }

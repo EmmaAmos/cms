@@ -28,6 +28,10 @@ export class ContactsServiceService {
     return null!;
   }
 
+  getSingleContact(id: number){
+    return this.contacts[id];
+  }
+
   addContact(contacts: Contact) {
     this.contacts.push(contacts);
     this.contactChanged.emit(this.contacts.slice());

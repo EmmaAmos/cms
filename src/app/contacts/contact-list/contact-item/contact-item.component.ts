@@ -1,5 +1,4 @@
-import { Component, Input, } from '@angular/core';
-import { ContactsServiceService } from '../../contacts-service.service';
+import { Component, Input, OnInit } from '@angular/core';
 
 import { Contact } from '../contact-list.model';
 
@@ -8,16 +7,13 @@ import { Contact } from '../contact-list.model';
   templateUrl: './contact-item.component.html',
   styleUrls: ['./contact-item.component.css']
 })
-export class ContactItemComponent {
+export class ContactItemComponent implements OnInit{
 
-  @Input() contact!: Contact;
+ @Input() contact!: Contact;
+ @Input() index!: number;
+ 
+
+ ngOnInit(){}
 
 
-
-  constructor(private contactService: ContactsServiceService) {}
-
-
-  onSelected() {
-    this.contactService.contactSelected.emit(this.contact);
-  }
 }

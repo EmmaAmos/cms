@@ -22,6 +22,7 @@ import { ContactsServiceService } from './contacts/contacts-service.service';
 import { ContactsEditComponent } from './contacts/contacts-edit/contacts-edit.component';
 import { DocumentsServiceService } from './documents/documents-service.service';
 import { MessagesServiceService } from './messages/messages-service.service';
+import { DocumentsEditComponent } from './documents/documents-edit/documents-edit.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { MessagesServiceService } from './messages/messages-service.service';
     DocumentsListComponent,
     DocumentsItemComponent,
     DropDownDirectiveDirective,
-    ContactsEditComponent
+    ContactsEditComponent,
+    DocumentsEditComponent
   ],
   imports: [
     BrowserModule,

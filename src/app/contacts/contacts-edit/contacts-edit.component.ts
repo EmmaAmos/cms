@@ -1,4 +1,5 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
 
 import { Contact } from '../contact-list/contact-list.model';
 import { ContactsServiceService } from '../contacts-service.service';
@@ -8,7 +9,7 @@ import { ContactsServiceService } from '../contacts-service.service';
   templateUrl: './contacts-edit.component.html',
   styleUrls: ['./contacts-edit.component.css']
 })
-export class ContactsEditComponent {
+export class ContactsEditComponent implements OnInit{
   @ViewChild('idInput') idInputRef!: ElementRef;
   @ViewChild('nameInput') nameInputRef!: ElementRef;
   @ViewChild('emailInput') emailInputRef!: ElementRef;
@@ -16,7 +17,10 @@ export class ContactsEditComponent {
   @ViewChild('imageUrlInput') imageUrlInputRef!: ElementRef;
   @ViewChild('groupInput') groupInputRef!: ElementRef;
 
-  constructor(private contactService: ContactsServiceService) {
+  id!: number;
+  editMode = false;
+
+  constructor(private contactService: ContactsServiceService, private route: ActivatedRoute) {
 
   }
 
@@ -30,6 +34,17 @@ export class ContactsEditComponent {
 
     const newContact = new Contact(ingID, ingName, ingEmail, ingPhone, ingImgeUrl, ingGroup);
     this.contactService.addContact(newContact);
+  }
+
+  ngOnInit() {
+      this.route.params
+        .subscribe(
+          (params: Params) => {
+            this.id = +params['id']
+            this.editMode = params['id'] != null;
+            console.log(this.editMode);
+          }
+        );
   }
 
 }
