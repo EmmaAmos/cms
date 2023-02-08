@@ -10,6 +10,9 @@ export class ContactsServiceService {
   contactSelected = new EventEmitter<Contact>();
 
   contactChanged = new EventEmitter<Contact[]>();
+
+  contactChangedEvent = new EventEmitter<Contact[]>();
+
   private contacts: Contact[] =[
     new Contact('1', 'R. Kent Jackson', 'jacksonk@byui.edu', '208-496-3771', '../../assets/images/jacksonk.jpg', []),
     new Contact('2', 'Rex Barzee', 'barzeer@byui.edu', '208-496-3768', '../../assets/images/barzeer.jpg', [])
@@ -37,6 +40,17 @@ export class ContactsServiceService {
     this.contactChanged.emit(this.contacts.slice());
   }
 
+  deleteContact(contact: Contact) {
+    if (!contact) {
+       return;
+    }
+    const pos = this.contacts.indexOf(contact);
+    if (pos < 0) {
+       return;
+    }
+    this.contacts.splice(pos, 1);
+    this.contactChangedEvent.emit(this.contacts.slice());
+  }
 
   constructor(){
     this.contacts = MOCKCONTACTS;

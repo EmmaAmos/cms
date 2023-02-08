@@ -34,4 +34,12 @@ export class ContactDetailComponent implements OnInit{
   onEditContact() {
     this.router.navigate(['edit'], {relativeTo: this.route});
   }
+
+  onDelete() {
+    this.contactsService.deleteContact(this.contact);
+    this.router.navigate(['contacts'], {relativeTo: this.route})
+    //route back to the '/documents' URL
+ }
+
+
 }

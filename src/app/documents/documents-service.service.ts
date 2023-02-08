@@ -11,6 +11,8 @@ export class DocumentsServiceService {
 
   documentChanged = new EventEmitter<Documents[]>();
 
+  documentChangedEvent = new EventEmitter<Documents[]>();
+
   private documents: Documents[] =[
     new Documents('345','Math Worksheet','A quick worksheet for the weekly math assignment','https://www.timestables.com/1-times-table-worksheets.html',[]),
     new Documents('346','English Worksheet','A quick worksheet for the weekly english assignment','https://www.englishbanana.com/worksheets/categories/elementary-english-worksheets/',[])
@@ -38,6 +40,17 @@ export class DocumentsServiceService {
     this.documentChanged.emit(this.documents.slice());
   }
 
+  deleteDocument(document: Documents) {
+    if (!document) {
+       return;
+    }
+    const pos = this.documents.indexOf(document);
+    if (pos < 0) {
+       return;
+    }
+    this.documents.splice(pos, 1);
+    this.documentChangedEvent.emit(this.documents.slice());
+  }
 
   constructor(){
     this.documents = MOCKDOCUMENTS;

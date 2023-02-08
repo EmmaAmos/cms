@@ -9,7 +9,7 @@ import { Documents } from '../documents.model';
   templateUrl: './documents-list.component.html',
   styleUrls: ['./documents-list.component.css']
 })
-export class DocumentsListComponent {
+export class DocumentsListComponent implements OnInit{
 
   @Output() documentWasSelceted= new EventEmitter<Documents>();
 
@@ -24,14 +24,24 @@ export class DocumentsListComponent {
   }
 
   ngOnInit() {
+    /*Document Click Change Listener*/
     this.documents = this.documentService.getDocuments();
     this.documentService.documentChanged
       .subscribe((documents: Documents[]) =>{
         this.documents = documents;
-      })
+      });
+
+      /*Document Delete Listener*/
+      this.documents = this.documentService.getDocuments();
+      this.documentService.documentChangedEvent
+        .subscribe((documents: Documents[]) =>{
+          this.documents = documents;
+        });
   }
 
   onNewDocument() {
     this.router.navigate(['newDocument'], {relativeTo: this.route});
   }
+
+
 }

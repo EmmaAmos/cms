@@ -18,11 +18,19 @@ export class ContactListComponent implements OnInit{
 
 
   ngOnInit() {
+    /*Contact Click Change Listener*/
     this.contacts = this.contactsService.getContacts();
     this.contactsService.contactChanged
       .subscribe((contacts: Contact[]) =>{
         this.contacts = contacts;
       })
+
+    /*Contact Delete Listener*/
+    this.contacts = this.contactsService.getContacts();
+    this.contactsService.contactChangedEvent
+      .subscribe((contacts: Contact[]) =>{
+        this.contacts = contacts;
+      });
   }
 
   onNewContact() {
