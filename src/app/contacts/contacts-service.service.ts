@@ -59,19 +59,19 @@ export class ContactsServiceService {
 }
 
 
-updateDocument(originalContact: Contact, newContact: Contact) {
-  if (!originalContact || !newContact) {
-      return
+  updateContact(originalContact: Contact, newContact: Contact) {
+    if (!originalContact || !newContact) {
+        return
+    }
+    let pos = this.contacts.indexOf(originalContact);
+    if (pos < 0) {
+        return;
+    }
+    newContact.id = originalContact.id;
+    this.contacts[pos] = newContact;
+    let contactsListClone = this.contacts.slice();
+    this.contactChangedEvent.next(contactsListClone);
   }
-  let pos = this.contacts.indexOf(originalContact);
-  if (pos < 0) {
-      return;
-  }
-  newContact.id = originalContact.id;
-  this.contacts[pos] = newContact;
-  let contactsListClone = this.contacts.slice();
-  this.contactChangedEvent.next(contactsListClone);
-}
 
   /*
   deleteContact(contact: Contact) {
