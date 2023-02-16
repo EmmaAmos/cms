@@ -1,5 +1,5 @@
-import { Injectable, EventEmitter } from '@angular/core';
-
+import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import { Documents } from '../documents/documents.model';
 import { MOCKDOCUMENTS } from './MOCKDOCUMENTS';
 
@@ -7,11 +7,17 @@ import { MOCKDOCUMENTS } from './MOCKDOCUMENTS';
   providedIn: 'root'
 })
 export class DocumentsServiceService {
-  documentSelected = new EventEmitter<Documents>();
+  documentSelected = new Subject<Documents>();
 
-  documentChanged = new EventEmitter<Documents[]>();
+  documentChanged = new Subject<Documents[]>();
 
-  documentChangedEvent = new EventEmitter<Documents[]>();
+  documentChangedEvent = new Subject<Documents[]>();
+
+  documentListChangedEvent = new Subject<Documents[]>();
+
+  maxId = 0;
+
+  maxDocumentId = 1;
 
   private documents: Documents[] =[
     new Documents('345','Math Worksheet','A quick worksheet for the weekly math assignment','https://www.timestables.com/1-times-table-worksheets.html',[]),
@@ -35,11 +41,38 @@ export class DocumentsServiceService {
     return this.documents[id];
   }
 
+  /*
   addDocument(documents: Documents) {
     this.documents.push(documents);
-    this.documentChanged.emit(this.documents.slice());
+    this.documentChanged.next(this.documents.slice());
+  }
+  */
+
+  addDocument(newDocument: Documents) {
+    if (!newDocument) {
+        return;
+    }
+    this.maxDocumentId++;
+    newDocument.id = this.maxDocumentId.toString();
+    this.documents.push(newDocument);
+    let documentsListClone = this.documents.slice();
+    this.documentListChangedEvent.next(documentsListClone);
   }
 
+  updateDocument(originalDocument: Documents, newDocument: Documents) {
+    if (!originalDocument || !newDocument) {
+        return
+    }
+    let pos = this.documents.indexOf(originalDocument);
+    if (pos < 0) {
+        return;
+    }
+    newDocument.id = originalDocument.id;
+    this.documents[pos] = newDocument;
+    let documentsListClone = this.documents.slice();
+    this.documentListChangedEvent.next(documentsListClone);
+  }
+  /*
   deleteDocument(document: Documents) {
     if (!document) {
        return;
@@ -49,10 +82,36 @@ export class DocumentsServiceService {
        return;
     }
     this.documents.splice(pos, 1);
-    this.documentChangedEvent.emit(this.documents.slice());
+    this.documentChangedEvent.next(this.documents.slice());
   }
+  */
+ 
+  deleteDocument(document: Documents) {
+    if (!document) {
+        return;
+    }
+    let pos = this.documents.indexOf(document);
+    if (pos < 0) {
+        return;
+    }
+    this.documents.splice(pos, 1);
+    let documentsListClone = this.documents.slice();
+    this.documentChangedEvent.next(documentsListClone);
+  }
+
+  getMaxId(): number {
+    let maxId = 0;
+    for (let document of this.documents) {
+        let currentId = parseInt(document.id);
+        if (currentId > maxId) {
+        maxId = currentId;
+        }
+    }
+    return maxId;
+}
 
   constructor(){
     this.documents = MOCKDOCUMENTS;
+    this.maxId = this.getMaxId();
   }
 }
