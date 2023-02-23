@@ -15,6 +15,8 @@ export class ContactsServiceService {
 
   contactsListChangedEvent  = new Subject<Contact[]>();
 
+  startedEditing = new Subject<number>();
+
   maxId = 0;
 
   maxContactId = 1;
