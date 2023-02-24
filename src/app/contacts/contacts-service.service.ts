@@ -17,9 +17,7 @@ export class ContactsServiceService {
 
   startedEditing = new Subject<number>();
 
-  maxId = 0;
-
-  maxContactId = 1;
+  maxContactId!: number;
 
   private contacts: Contact[] =[
     new Contact('1', 'R. Kent Jackson', 'jacksonk@byui.edu', '208-496-3771', '../../assets/images/jacksonk.jpg', []),
@@ -58,7 +56,7 @@ export class ContactsServiceService {
     this.contacts.push(newContact);
     let contactsListClone = this.contacts.slice();
     this.contactsListChangedEvent.next(contactsListClone);
-}
+  }
 
 
   updateContact(originalContact: Contact, newContact: Contact) {
@@ -75,19 +73,6 @@ export class ContactsServiceService {
     this.contactChangedEvent.next(contactsListClone);
   }
 
-  /*
-  deleteContact(contact: Contact) {
-    if (!contact) {
-       return;
-    }
-    const pos = this.contacts.indexOf(contact);
-    if (pos < 0) {
-       return;
-    }
-    this.contacts.splice(pos, 1);
-    this.contactChangedEvent.next(this.contacts.slice());
-  }
-  */
   deleteContact(contact: Contact) {
     if (!contact) {
         return;
@@ -114,7 +99,7 @@ export class ContactsServiceService {
 
   constructor(){
     this.contacts = MOCKCONTACTS;
-    this.maxId = this.getMaxId();
+    this.maxContactId = this.getMaxId();
   }
   
 }

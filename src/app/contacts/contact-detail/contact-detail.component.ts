@@ -13,6 +13,7 @@ export class ContactDetailComponent implements OnInit{
 
   contact!: Contact;
   id!: number;
+  editMode: boolean = false;
 
   contacts: Contact[] =[
     new Contact('1', 'R. Kent Jackson', 'jacksonk@byui.edu', '208-496-3771', '../../assets/images/jacksonk.jpg', []),

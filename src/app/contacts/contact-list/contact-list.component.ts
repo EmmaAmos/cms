@@ -10,6 +10,7 @@ import { ContactsServiceService } from '../contacts-service.service';
 })
 export class ContactListComponent implements OnInit{
 
+
   contacts!: Contact[];
 
   constructor(private contactsService: ContactsServiceService, private router: Router, private route: ActivatedRoute){
@@ -34,6 +35,7 @@ export class ContactListComponent implements OnInit{
   }
 
   onNewContact() {
+    console.log('newContact in Contact Detail')
     this.router.navigate(['newContact'], {relativeTo: this.route});
   }
 

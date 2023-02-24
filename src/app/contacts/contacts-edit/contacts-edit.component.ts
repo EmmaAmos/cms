@@ -1,6 +1,5 @@
-import { group } from '@angular/animations';
-import { Component, ViewChild, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import {  NgForm } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { Contact } from '../contact-list/contact-list.model';
@@ -12,13 +11,6 @@ import { ContactsServiceService } from '../contacts-service.service';
   styleUrls: ['./contacts-edit.component.css']
 })
 export class ContactsEditComponent implements OnInit{
-  //@ViewChild(f) = contactForm;
-
-  //id!: number;
-  //editMode = false;
- // contact!: Contact;
-  //originalContact!: Contact;
- // groupContacts: Contact[] = [];
   index!: number;
   originalContact!: Contact;
   contact!: Contact;
@@ -62,7 +54,7 @@ export class ContactsEditComponent implements OnInit{
   }
 
   onCancel(){
-    this.router.navigate(['/edit'], {relativeTo: this.route});
+    this.router.navigate(['/contacts'], {relativeTo: this.route});
   }
 
   onSubmit(form: NgForm) {
@@ -74,15 +66,19 @@ export class ContactsEditComponent implements OnInit{
     newContact.phone = value.phone;
     newContact.imageUrl = value.imageUrl;
     newContact.group = value.group;
-
+    console.log('this is the state of this edit mode'+ this.editMode)
     if (this.editMode === true) {
+      console.log('EDITMODE TRUE')
       this.contactService.updateContact(this.originalContact, newContact);
+      console.log('Update Succsess')
     } else {
       this.contactService.addContact(newContact);
+      console.log('Addition Succsess')
     }
     this.router.navigate(['/contacts']);
   }
 
+  /* my originalcode
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       const id = params['id'];
@@ -96,6 +92,34 @@ export class ContactsEditComponent implements OnInit{
       }
       this.editMode = true;
       this.contact = JSON.parse(JSON.stringify(this.originalContact));
+      if(this.contact){
+        this.groupContacts = JSON.parse(JSON.stringify(this.groupContacts));
+      }
+    });
+  }
+  */
+  ngOnInit() {
+    this.route.params.subscribe((params: Params) => {
+      const id: string | undefined = params['id'];
+      if (!id) {
+        this.editMode = false;
+        return;
+      }
+      const originalContact: Contact | undefined = this.contactService.getContact(id);
+      if (!originalContact) {
+        return;
+      }
+      this.editMode = true;
+      this.contact = JSON.parse(JSON.stringify(this.originalContact));
+      if(this.contact){
+        this.groupContacts = JSON.parse(JSON.stringify(this.groupContacts));
+      }
+      /*robot code
+      const contact: Contact = {...originalContact}; // spread operator used to clone the original contact
+      this.contact = contact;
+      if (this.contact.group) {
+        this.groupContacts = {...this.contact.group}; // spread operator used to clone the contact's group
+      }*/
     });
   }
 

@@ -1,5 +1,3 @@
-import { Contact } from "./contact-list/contact-list.model";
-
 export class aSingleContact {
     public id: string;
     public name: string;
@@ -8,7 +6,6 @@ export class aSingleContact {
     public imageUrl: string;
     public group: string;
 
-    public contacts!: Contact[];
  
     constructor(id: string, name: string, email: string, phone: string, imageUrl: string, group: string ) {
         this.id = id;

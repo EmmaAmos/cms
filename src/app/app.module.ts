@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DndModule } from 'ng2-dnd';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -49,7 +49,8 @@ import { DocumentsEditComponent } from './documents/documents-edit/documents-edi
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    DndModule.forRoot()
+    DndModule.forRoot(),
+    ReactiveFormsModule
   ],
   providers: [ContactsServiceService, DocumentsServiceService, MessagesServiceService],
   bootstrap: [AppComponent]
