@@ -13,7 +13,8 @@
               size="120"
               max="120"
               name ="name"
-              ngModel="document?.name"
+              [ngModel]="document?.name"
+              #name="ngModel"
               required>
           </div>
         </div>
@@ -28,7 +29,8 @@
               size="120"
               max="255"
               name ="description"
-              ngModel="document?.description"
+              [ngModel]="document?.description"
+              #name="ngModel"
               required>
           </div>
         </div>
@@ -43,9 +45,13 @@
               size="150"
               max="255"
               name ="url"
-              ngModel="document?.url"
+              [ngModel]="document?.url"
+              #name="ngModel"
               required>
           </div>
+        </div>
+        <div class="alert alert-danger" *ngIf="name.invalid">
+          <p>Document title and URL are required.</p>
         </div>
   
         <div class="row">

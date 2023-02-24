@@ -11,7 +11,8 @@ import { ContactsServiceService } from '../contacts-service.service';
 export class ContactListComponent implements OnInit{
 
 
-  contacts!: Contact[];
+  contact!: Contact[];
+  editMode: boolean = false;
 
   constructor(private contactsService: ContactsServiceService, private router: Router, private route: ActivatedRoute){
 
@@ -20,23 +21,24 @@ export class ContactListComponent implements OnInit{
 
   ngOnInit() {
     /*Contact Click Change Listener*/
-    this.contacts = this.contactsService.getContacts();
+    this.contact = this.contactsService.getContacts();
     this.contactsService.contactChanged
       .subscribe((contacts: Contact[]) =>{
-        this.contacts = contacts;
+        this.contact = contacts;
       })
 
     /*Contact Delete Listener*/
-    this.contacts = this.contactsService.getContacts();
+    this.contact = this.contactsService.getContacts();
     this.contactsService.contactChangedEvent
       .subscribe((contacts: Contact[]) =>{
-        this.contacts = contacts;
+        this.contact = contacts;
       });
   }
 
   onNewContact() {
-    console.log('newContact in Contact Detail')
     this.router.navigate(['newContact'], {relativeTo: this.route});
+    this.editMode = true;
+    console.log('this is the state of this edit mode'+ this.editMode)
   }
 
 }

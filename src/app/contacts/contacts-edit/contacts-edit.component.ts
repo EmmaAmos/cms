@@ -68,7 +68,7 @@ export class ContactsEditComponent implements OnInit{
     newContact.group = value.group;
     console.log('this is the state of this edit mode'+ this.editMode)
     if (this.editMode === true) {
-      console.log('EDITMODE TRUE')
+      console.log('this is the state of this edit mode'+ this.editMode)
       this.contactService.updateContact(this.originalContact, newContact);
       console.log('Update Succsess')
     } else {

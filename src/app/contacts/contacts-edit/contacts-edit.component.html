@@ -1,4 +1,4 @@
-<div class="panel panel-default">
+<div class="panel panel-default" >
     <div class="panel-body">
       <form id="contact-edit" (ngSubmit)="onSubmit(f)" #f="ngForm">
         <div class="row">
@@ -11,11 +11,11 @@
               size="120"
               max="120"
               name ="name"
-              ngModel="contact?.name"
+              [(ngModel)]="contact.name"
+              #name="ngModel"
               required>
           </div>
         </div>
-                <!--[(ngModel)]="contact!.name"-->
         <div class="row">
           <div class="col-sm-12 form-group">
             <label for="email">Email:</label>
@@ -27,11 +27,11 @@
               max="255"
               name ="email"
               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
-              ngModel="contact?.email"
+              [(ngModel)]="contact.email"
+              #name="ngModel"
               required>
           </div>
         </div>
-  <!--[(ngModel)]="contact!.email"-->
         <div class="row">
           <div class="col-sm-12 form-group">
             <label for="phone">Phone:</label>
@@ -43,9 +43,9 @@
               max="255"
               name ="phone"
               pattern="\D*([2-9]\d{2})(\D*)([2-9]\d{2})(\D*)(\d{4})\D*"
-              ngModel="contact?.phone"
+              [(ngModel)]="contact.phone"
+              #name="ngModel"
               required>
-            <!--[(ngModel)]="contact!.phone"-->
           </div>
         </div>
   
@@ -59,16 +59,13 @@
               size="150"
               max="255"
               name ="imageUrl"
-              ngModel="contact?.imageUrl"
+              [(ngModel)]="contact.imageUrl"
+              #name="ngModel"
               required>
-          </div>           <!-- [(ngModel)]="contact!.imageUrl"  -->    
+          </div>   
         </div>
   
-        <div class="row"               
-        name ="group"
-        required>
-
-        <!-- [(ngModel)]="contact!.group" -->
+        <div class="row">
           <div class="form-group">
             <label for="groupList">Group Contacts:</label>
   
@@ -78,7 +75,8 @@
   
               <div  *ngFor="let contact of groupContacts; let i = index">
                 <div>
-                  <app-contact-item class="col-sm-11" [contact]="contact"></app-contact-item>
+                  <app-contact-item class="col-sm-11" [contact]="contact" [(ngModel)]="contact.group"
+                  #name="ngModel" required></app-contact-item>
                   <button class="btn btn-danger col-sm-2 deleteButton" (click)="onRemoveItem()">X</button>
                 </div>
               </div>
