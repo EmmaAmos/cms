@@ -7,17 +7,20 @@ import { ContactsServiceService } from './contacts-service.service';
   selector: 'app-contacts',
   templateUrl: './contacts.component.html',
   styleUrls: ['./contacts.component.css'],
+  providers: [ContactsServiceService]
 })
 export class ContactsComponent {
   contacts!: Contact[];
   selectedContact!: Contact;
 
-    constructor( ) {
+    constructor( private contactsService: ContactsServiceService) {
 
     }
 
   ngOnInit() {
-
+    this.contactsService.contactSelected
+      .subscribe((contact: Contact) =>{
+        this.selectedContact = contact;
+      });
   }
-  
 }

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {  FormGroup, NgForm } from '@angular/forms';
+import { Component, Directive, forwardRef, OnInit } from '@angular/core';
+import {  FormGroup, NgForm, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { Contact } from '../contact-list/contact-list.model';
@@ -8,8 +8,9 @@ import { ContactsServiceService } from '../contacts-service.service';
 @Component({
   selector: 'app-contacts-edit',
   templateUrl: './contacts-edit.component.html',
-  styleUrls: ['./contacts-edit.component.css']
+  styleUrls: ['./contacts-edit.component.css'],
 })
+
 export class ContactsEditComponent implements OnInit{
 
   index!: number;
@@ -25,11 +26,10 @@ export class ContactsEditComponent implements OnInit{
 
   isInvalidContact(newContact: Contact) {
     if (!newContact) {// newContact has no value
-      console.log('this'+newContact+'was made')
       return true;
     }
     if (this.contact && newContact.id === this.contact.id) {
-      console.log('this'+newContact+'='+this.contact.id)
+      console.log('this '+newContact+ ' = '+this.contact.id)
        return true;
     }
     for (let i = 0; i < this.groupContacts.length; i++){
@@ -46,10 +46,11 @@ export class ContactsEditComponent implements OnInit{
       console.log('drag event is working'+ selectedContact);
       const invalidGroupContact = this.isInvalidContact(selectedContact);    
       if (invalidGroupContact){
+        console.log('the editMode is '+ this.editMode +' in addToGroup')
         return;
       }
       this.groupContacts.push(selectedContact);
-      console.log('operation worked'+ selectedContact)
+      console.log('operation addToGroup worked '+ selectedContact)
     }
 
   onRemoveItem(){
@@ -72,9 +73,8 @@ export class ContactsEditComponent implements OnInit{
     newContact.phone = value.phone;
     newContact.imageUrl = value.imageUrl;
     newContact.group = value.group;
-    console.log('this is the state of this edit mode'+ this.editMode)
     if (this.editMode === true) {
-      console.log('this is the state of this edit mode'+ this.editMode)
+      console.log('this is the state of this edit mode'+ this.editMode +' in onSubmit')
       this.contactService.updateContact(this.originalContact, newContact);
       console.log('Update Succsess')
     } else {
@@ -103,7 +103,7 @@ export class ContactsEditComponent implements OnInit{
       }
     });
   }
-  */
+
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       const id: string | undefined = params['id'];
@@ -111,8 +111,8 @@ export class ContactsEditComponent implements OnInit{
         this.editMode = false;
         return;
       }
-      const originalContact: Contact | undefined = this.contactService.getContact(id);
-      if (!originalContact) {
+      this.originalContact = this.contactService.getContact(id);
+      if (!this.originalContact) {
         return;
       }
       this.editMode = true;
@@ -120,13 +120,56 @@ export class ContactsEditComponent implements OnInit{
       if(this.contact){
         this.groupContacts = JSON.parse(JSON.stringify(this.groupContacts));
       }
-      /*robot code
-      const contact: Contact = {...originalContact}; // spread operator used to clone the original contact
-      this.contact = contact;
-      if (this.contact.group) {
-        this.groupContacts = {...this.contact.group}; // spread operator used to clone the contact's group
-      }*/
     });
+  }
+
+
+
+  ngOnInit() {
+    this.route.params.subscribe((params: Params) => {
+      const id = params['id'];
+      if (!id) {
+        this.editMode = false;
+        return;
+      }
+      this.originalContact = this.contactService.getContact(id);
+ 
+
+      if (!this.originalContact) {
+        return;
+      }
+      this.editMode = true;
+      console.log("Edit mode is: "+ this.editMode);
+      // copies originalDocument object and into this.document object - no reference passed
+      this.contact = JSON.parse(JSON.stringify(this.originalContact));
+    })
+  }
+  */
+
+  ngOnInit() {
+    this.route.params.subscribe(
+      (params: Params) => {
+        const id = +params['id'];
+        if (id === undefined || id === null) {
+          this.editMode = false;
+          console.log('the editMode is '+ this.editMode +' in ngOnInit for if 1')
+          return;
+        }
+        
+        const originalContact = this.contactService.getSingleContact(id);
+        if (originalContact === undefined || originalContact === null) {
+          console.log('the editMode is '+ this.editMode +' in ngOnInit for if 2')
+          return;
+        }
+        this.editMode = true;
+        this.contact = { ...originalContact };
+  
+        if (this.contact.group) {
+          this.groupContacts = [ ...this.contact.group ];
+          console.log('the editMode is '+ this.editMode +' in ngOnInit for if 3')
+        }
+      }
+    );
   }
 
 }

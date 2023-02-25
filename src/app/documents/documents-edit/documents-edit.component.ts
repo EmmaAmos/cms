@@ -16,7 +16,9 @@ export class DocumentsEditComponent implements OnInit{
   editMode: boolean = false;
   id!: number;
 
-  constructor(private route: ActivatedRoute, private router: Router, private documentsService: DocumentsServiceService){
+  constructor(private route: ActivatedRoute, 
+    private router: Router, 
+    private documentsService: DocumentsServiceService){
 
   }
 
@@ -43,7 +45,7 @@ export class DocumentsEditComponent implements OnInit{
   }
 
 
-
+  /*
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       const id = params['id'];
@@ -59,6 +61,26 @@ export class DocumentsEditComponent implements OnInit{
       console.log('the editMode is'+ this.editMode)
       this.document = JSON.parse(JSON.stringify(originalDocument));
     });
+  }*/
+
+  ngOnInit() {
+    this.route.params.subscribe((params: Params) => {
+      const id = params['id'];
+      console.log('the doc id is '+ id)
+      if (id == null) {
+        this.editMode = false;
+        console.log("Edit mode is: "+ this.editMode);
+        return;
+      }
+      this.originalDocument = this.documentsService.getDocument(id);
+      console.log('this.originalDocument.id ' +this.originalDocument.id)
+      if (this.originalDocument == null) {
+        return;
+      }
+      this.editMode = true;
+      console.log("Edit mode is: "+ this.editMode);
+      this.document = JSON.parse(JSON.stringify(this.originalDocument));
+    })
   }
 
 }

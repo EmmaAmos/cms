@@ -24,7 +24,9 @@ export class DocumentsDetailComponent implements OnInit{
         .subscribe(
           (params: Params) => {
             this.id = +params['id'];
+            console.log('the single id '+ this.id)
             this.document = this.documentsService.getSingleDocument(this.id);
+            console.log('this document from Single '+ this.document.id)
           }
         );
   }

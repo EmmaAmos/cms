@@ -13,7 +13,7 @@ export class ContactDetailComponent implements OnInit{
 
   contact!: Contact;
   id!: number;
-  editMode: boolean = false;
+  //editMode: boolean = false;
 
   contacts: Contact[] =[
     new Contact('1', 'R. Kent Jackson', 'jacksonk@byui.edu', '208-496-3771', '../../assets/images/jacksonk.jpg', []),
@@ -33,8 +33,7 @@ export class ContactDetailComponent implements OnInit{
   }
 
   onEditContact() {
-    this.editMode = true;
-    console.log('this is the state of this edit mode'+ this.editMode)
+    this.router.navigate(['edit'], {relativeTo: this.route})
   }
 
   onDelete() {

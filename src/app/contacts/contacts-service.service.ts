@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { provideRouter } from '@angular/router';
+import { providers } from 'ng2-dnd';
 import { Subject } from 'rxjs';
 
 import { Contact } from './contact-list/contact-list.model';
@@ -8,6 +10,8 @@ import { MOCKCONTACTS } from './MOCKCONTACTS';
   providedIn: 'root'
 })
 export class ContactsServiceService {
+
+  contactSelected = new Subject<Contact>();
 
   contactChanged = new Subject<Contact[]>();
 
@@ -61,10 +65,12 @@ export class ContactsServiceService {
 
   updateContact(originalContact: Contact, newContact: Contact) {
     if (!originalContact || !newContact) {
-        return
+      console.log('this is '+ originalContact)
+      return;
     }
     let pos = this.contacts.indexOf(originalContact);
     if (pos < 0) {
+      console.log('this is the position of the contact' +pos)
         return;
     }
     newContact.id = originalContact.id;

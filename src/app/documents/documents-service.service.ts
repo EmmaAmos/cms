@@ -30,6 +30,7 @@ export class DocumentsServiceService {
 
   getDocument(id: string) : Documents {
     for (let document of this.documents) {
+      console.log('listed documet '+ document.name + document.id)
       if(document.id == id) {
          return document;
       }
@@ -38,7 +39,15 @@ export class DocumentsServiceService {
   }
 
   getSingleDocument(id: number){
-    return this.documents[id];
+    console.log('get Single Document '+ id)
+    let i = 0;
+    for(i = 0; i < this.documents.length; i++) {
+      const document = this.documents[i];
+      if (id == parseInt(document.id)) {
+        break;
+      }
+    }
+    return this.documents[i]
   }
 
   /*

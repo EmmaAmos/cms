@@ -77,12 +77,11 @@
 
             <div class="row" id="groupList"
                 style="min-height: 3rem;" 
-                dnd-droppable [dropZones]="['contactGroup']" (onDropSuccess)="addToGroup($event)" >
+                dnd-droppable [dropZones]="['contactGroup']" (onDropSuccess)="addToGroup($event)">
   
               <div  *ngFor="let contact of groupContacts; let i = index">
                 <div>
-                  <app-contact-item class="col-sm-11" [contact]="contact" name ="group" [(ngModel)]="contact.group" 
-                  #name="ngModel" required></app-contact-item>
+                  <app-contact-item class="col-sm-11" [contact]="contact"></app-contact-item>
                   <button class="btn btn-danger col-sm-2 deleteButton" (click)="onRemoveItem()">X</button>  
                 </div>
               </div>
@@ -102,3 +101,5 @@
       </form>
     </div>
 </div>
+<!--  name ="group" [(ngModel)]="contact.group" 
+                  #name="ngModel" required-->
