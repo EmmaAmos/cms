@@ -30,7 +30,6 @@ export class DocumentsListComponent implements OnInit, OnDestroy{
   ngOnInit() {
     /*Document Click Change Listener*/
     this.documents = this.documentService.getDocuments();
-    console.log('here is the document list '+ this.documents)
     this.subscription = this.documentService.documentChanged
       .subscribe((documents: Documents[]) =>{
         this.documents = documents;

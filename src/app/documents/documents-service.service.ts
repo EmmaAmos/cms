@@ -15,7 +15,6 @@ export class DocumentsServiceService {
 
   documentListChangedEvent = new Subject<Documents[]>();
 
-  maxId = 0;
 
   maxDocumentId = 1;
 
@@ -63,7 +62,7 @@ export class DocumentsServiceService {
     }
     this.maxDocumentId++;
     newDocument.id = this.maxDocumentId.toString();
-    this.documents.push(newDocument);
+    this.documents.push(newDocument)
     let documentsListClone = this.documents.slice();
     this.documentListChangedEvent.next(documentsListClone);
   }

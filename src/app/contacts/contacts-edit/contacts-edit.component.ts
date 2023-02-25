@@ -11,7 +11,7 @@ import { ContactsServiceService } from '../contacts-service.service';
   styleUrls: ['./contacts-edit.component.css'],
 })
 
-export class ContactsEditComponent implements OnInit{
+export class ContactsEditComponent implements OnInit {
 
   index!: number;
   originalContact!: Contact;
@@ -20,7 +20,10 @@ export class ContactsEditComponent implements OnInit{
   editMode: boolean = false;
   id!: string;
 
-  constructor(private contactService: ContactsServiceService, private route: ActivatedRoute, private router: Router) {
+  constructor(
+    private contactService: ContactsServiceService, 
+    private route: ActivatedRoute, 
+    private router: Router) {
 
   }
 
@@ -41,17 +44,17 @@ export class ContactsEditComponent implements OnInit{
     return false;
   }
 
-    addToGroup($event: any) {
-      const selectedContact: Contact = $event.dragData;
-      console.log('drag event is working'+ selectedContact);
-      const invalidGroupContact = this.isInvalidContact(selectedContact);    
-      if (invalidGroupContact){
-        console.log('the editMode is '+ this.editMode +' in addToGroup')
-        return;
-      }
-      this.groupContacts.push(selectedContact);
-      console.log('operation addToGroup worked '+ selectedContact)
+  addToGroup($event: any) {
+    const selectedContact: Contact = $event.dragData;
+    console.log('drag event is working'+ selectedContact.id);
+    const invalidGroupContact = this.isInvalidContact(selectedContact);    
+    if (invalidGroupContact){
+      console.log('the editMode is '+ this.editMode +' in addToGroup')
+      return;
     }
+    this.groupContacts.push(selectedContact);
+    console.log('operation addToGroup worked '+ selectedContact.id)
+  }
 
   onRemoveItem(){
     if (this.index < 0 || this.index >= this.groupContacts.length) {
@@ -81,6 +84,7 @@ export class ContactsEditComponent implements OnInit{
       this.contactService.addContact(newContact);
       console.log('Addition Succsess')
     }
+    console.log(this.contactService.getContacts())
     this.router.navigate(['/contacts']);
   }
 

@@ -28,7 +28,7 @@
               name ="email"
               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
               [ngModel]="contact?.email"
-              #name="ngModel"
+              #email="ngModel"
               required>
           </div>
         </div>
@@ -47,7 +47,7 @@
               name ="phone"
               pattern="\D*([2-9]\d{2})(\D*)([2-9]\d{2})(\D*)(\d{4})\D*"
               [ngModel]="contact?.phone"
-              #name="ngModel"
+              #phone="ngModel"
               required>
           </div>
         </div>
@@ -66,7 +66,7 @@
               max="255"
               name ="imageUrl"
               [ngModel]="contact?.imageUrl"
-              #name="ngModel"
+              #imageUrl="ngModel"
               required>
           </div>   
         </div>
@@ -76,7 +76,7 @@
             <label for="groupList">Group Contacts:</label>
 
             <div class="row" id="groupList"
-                style="min-height: 3rem;" 
+                style="min-height: 3rem;"
                 dnd-droppable [dropZones]="['contactGroup']" (onDropSuccess)="addToGroup($event)">
   
               <div  *ngFor="let contact of groupContacts; let i = index">
