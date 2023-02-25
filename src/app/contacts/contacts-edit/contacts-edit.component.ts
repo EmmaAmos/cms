@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {  NgForm } from '@angular/forms';
+import {  FormGroup, NgForm } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { Contact } from '../contact-list/contact-list.model';
@@ -11,6 +11,7 @@ import { ContactsServiceService } from '../contacts-service.service';
   styleUrls: ['./contacts-edit.component.css']
 })
 export class ContactsEditComponent implements OnInit{
+
   index!: number;
   originalContact!: Contact;
   contact!: Contact;
@@ -24,27 +25,32 @@ export class ContactsEditComponent implements OnInit{
 
   isInvalidContact(newContact: Contact) {
     if (!newContact) {// newContact has no value
+      console.log('this'+newContact+'was made')
       return true;
     }
     if (this.contact && newContact.id === this.contact.id) {
+      console.log('this'+newContact+'='+this.contact.id)
        return true;
     }
     for (let i = 0; i < this.groupContacts.length; i++){
        if (newContact.id === this.groupContacts[i].id) {
+        console.log('operation isInvalidContact worked')
          return true;
       }
     }
     return false;
- }
-
-  addToGroup($event: any){
-    const selectedContact: Contact = $event.dragData;
-    const invalidGroupContact = this.isInvalidContact(selectedContact);
-    if (invalidGroupContact){
-       return;
-    }
-    this.groupContacts.push(selectedContact);
   }
+
+    addToGroup($event: any) {
+      const selectedContact: Contact = $event.dragData;
+      console.log('drag event is working'+ selectedContact);
+      const invalidGroupContact = this.isInvalidContact(selectedContact);    
+      if (invalidGroupContact){
+        return;
+      }
+      this.groupContacts.push(selectedContact);
+      console.log('operation worked'+ selectedContact)
+    }
 
   onRemoveItem(){
     if (this.index < 0 || this.index >= this.groupContacts.length) {
