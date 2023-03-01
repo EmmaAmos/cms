@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { providers } from 'ng2-dnd';
-import { Subject } from 'rxjs';
+import { catchError, Observable, Subject, tap, throwError } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Contact } from './contact-list/contact-list.model';
 import { MOCKCONTACTS } from './MOCKCONTACTS';
@@ -27,9 +28,22 @@ export class ContactsServiceService {
     new Contact('1', 'R. Kent Jackson', 'jacksonk@byui.edu', '208-496-3771', '../../assets/images/jacksonk.jpg', []),
     new Contact('2', 'Rex Barzee', 'barzeer@byui.edu', '208-496-3768', '../../assets/images/barzeer.jpg', [])
   ];
-
-  getContacts(): Contact[]{
-    return this.contacts.slice();
+  
+  getContacts(): Observable<Contact[]>{
+    //return this.contacts.slice();
+    return this.http.get<Contact[]>('https://emma-sangularproject-default-rtdb.firebaseio.com/contacts.json')
+      .pipe(
+        tap((contacts: Contact[]) => {
+          this.contacts = contacts;
+          this.maxContactId = this.getMaxId();
+          this.contacts.sort((a, b) => a.name.localeCompare(b.name));
+          this.contactsListChangedEvent.next(this.contacts.slice());
+        }),
+        catchError(error => {
+          console.error(error);
+          return throwError(error);
+        })
+      );
   }
 
   getContact(id: string) : Contact {
@@ -59,7 +73,8 @@ export class ContactsServiceService {
     newContact.id = this.maxContactId.toString();
     this.contacts.push(newContact);
     let contactsListClone = this.contacts.slice();
-    this.contactsListChangedEvent.next(contactsListClone);
+    //this.contactsListChangedEvent.next(contactsListClone);
+    this.storeContacts(contactsListClone)
   }
 
 
@@ -76,7 +91,8 @@ export class ContactsServiceService {
     newContact.id = originalContact.id;
     this.contacts[pos] = newContact;
     let contactsListClone = this.contacts.slice();
-    this.contactChangedEvent.next(contactsListClone);
+    //this.contactChangedEvent.next(contactsListClone);
+    this.storeContacts(contactsListClone)
   }
 
   deleteContact(contact: Contact) {
@@ -89,7 +105,28 @@ export class ContactsServiceService {
     }
     this.contacts.splice(pos, 1);
     let contactsListClone = this.contacts.slice();
-    this.contactChangedEvent.next(contactsListClone);
+    //this.contactChangedEvent.next(contactsListClone);
+    this.storeContacts(contactsListClone)
+  }
+
+  storeContacts(contacts: Contact[]) {
+    const contactString = JSON.stringify(contacts);
+  
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+  
+    this.http
+      .put('https://emma-sangularproject-default-rtdb.firebaseio.com/contacts.json', contactString, { headers })
+      .subscribe(
+        (response) => {
+          console.log('Contact saved successfully', response);
+        }, 
+        (error) => {
+          console.error('Error saving contacts: ', error);
+        });
+  
+    this.contactsListChangedEvent.next(this.contacts.slice());
   }
 
   getMaxId(): number {
@@ -102,8 +139,7 @@ export class ContactsServiceService {
     }
     return maxId;
 }
-
-  constructor(){
+  constructor(private http: HttpClient){
     this.contacts = MOCKCONTACTS;
     this.maxContactId = this.getMaxId();
   }

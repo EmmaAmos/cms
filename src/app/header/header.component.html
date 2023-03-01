@@ -13,10 +13,10 @@
                 <li class="dropdown" appDropDownDirective>
                     <a style="cursor:pointer" class="dropdown-toggle" role="button">User <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a style="cursor:pointer">LogIn</a></li>
-                        <li><a style="cursor:pointer">Other</a></li>
+                        <li><a style="cursor:pointer" (click)="onLogIn()">LogIn</a></li>
+                        <li><a style="cursor:pointer" (click)="onOther()">Other</a></li>
                         <hr>
-                        <li><a style="cursor:pointer">LogOut</a></li>
+                        <li><a style="cursor:pointer" (click)="onLogOut()">LogOut</a></li>
                     </ul>
                 </li>
             </ul>

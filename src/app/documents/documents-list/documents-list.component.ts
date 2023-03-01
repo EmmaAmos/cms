@@ -15,7 +15,7 @@ export class DocumentsListComponent implements OnInit, OnDestroy{
   @Output() documentWasSelceted= new EventEmitter<Documents>();
 
   private subscription!: Subscription;
-
+  term!: string
   documents: Documents[] = [];
 
   onDocumentSelected(document: Documents) {
@@ -28,19 +28,38 @@ export class DocumentsListComponent implements OnInit, OnDestroy{
   }
 
   ngOnInit() {
-    /*Document Click Change Listener*/
+
+    //robo code
+    this.documentService.getDocuments().subscribe(
+      (documents: Documents[]) => {
+        this.documents = documents;
+      },
+      (error: any) => {
+        console.error('Error fetching documents: ', error);
+      }
+    );
+
+    /*Testing Jessica's code
+    this.subscription = this.documentService.documentListChangedEvent.subscribe(
+      (documents: Documents[]) => {
+        this.documents = documents;
+      }
+    )
+    this.documentService.getDocuments();
+    */
+    /*Document Click Change Listener 
     this.documents = this.documentService.getDocuments();
     this.subscription = this.documentService.documentChanged
       .subscribe((documents: Documents[]) =>{
         this.documents = documents;
-      });
+      });*/
 
-      /*Document Delete Listener*/
+      /*Document Delete Listener
       this.documents = this.documentService.getDocuments();
       this.documentService.documentChangedEvent
         .subscribe((documents: Documents[]) =>{
           this.documents = documents;
-        });
+        });*/
   }
 
   onNewDocument() {
@@ -49,6 +68,10 @@ export class DocumentsListComponent implements OnInit, OnDestroy{
 
   ngOnDestroy() {
       this.subscription.unsubscribe();
+  }
+
+  search(value: string) {
+    this.term = value;
   }
 
 }

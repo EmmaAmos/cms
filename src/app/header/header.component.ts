@@ -7,6 +7,16 @@ import { Component } from '@angular/core';
 })
 export class HeaderComponent {
 
+  onLogIn(){
+    
+  }
 
+  onOther(){
+
+  }
+
+  onLogOut(){
+
+  }
 
 }

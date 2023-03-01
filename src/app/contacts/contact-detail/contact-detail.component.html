@@ -27,7 +27,12 @@
 <div class="list-group-item clearfix">
     <p>Phone: {{contact.phone}}</p>
     <p>Email: {{contact.email}}</p>
+    <div>
+    <p>Group:</p>
+    <app-contact-item  *ngFor="let contactEL of contacts;" [contact]="contactEL" ></app-contact-item>
+    </div>
 </div>
+
 
 
 

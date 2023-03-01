@@ -1,10 +1,26 @@
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <div class="row pad-left-right">
-      <span class="pull-left title">Documents</span>
-      <a (click)="onNewDocument()" class="btn btn-success pull-right">Add Document</a>
+<div class="row">
+  <div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="row">
+          <span class="title pad-left-right">Dcouments</span>
+        </div>
+        <div class="row">
+          <div class="input-group pull-left pad-left-right col-xs-7">
+            <input class="form-control" type="text" #searchBox onkeyup="search(searchBox.value)" placeholder="Enter a search value">
+            <div class="glyphicon glyphicon-search input-group-addon" (click)="search(searchBox.value)"></div>
+          </div>
+          <div class="pull-right pad-left-right">
+            <a class="btn btn-success" [routerLink]="['newDocument']">Add Document</a>
+            <!--<a (click)="onNewDocument()" class="btn btn-success pull-right">Add Document</a>-->
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+</div>
+
   <div class="panel-body">
     <div class="center-panel">
       <app-documents-item *ngFor="let documentEL of documents; let i = index" [document]="documentEL" [index]="i"></app-documents-item>

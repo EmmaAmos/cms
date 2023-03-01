@@ -11,11 +11,11 @@ import { MessagesComponent } from './messages/messages.component';
 const appRoutes: Routes = [
   { path: '', redirectTo: '/contacts', pathMatch:'full' },
   { path: 'contacts', component: ContactsComponent, children:[ 
-    {path: 'newContact', component: ContactsEditComponent},{path: ':id', component: ContactDetailComponent}, {path: ':id/edit', component: ContactsEditComponent} 
+    {path: 'newContact', component: ContactsEditComponent}, {path: 'new', component: ContactsEditComponent}, {path: ':id', component: ContactDetailComponent}, {path: ':id/edit', component: ContactsEditComponent} 
   ]},
 
   {path: 'documents', component: DocumentsComponent, children:[
-    {path: 'newDocument', component: DocumentsEditComponent}, {path: ':id', component: DocumentsDetailComponent}, {path: ':id/edit', component: DocumentsEditComponent}
+    {path: 'newDocument', component: DocumentsEditComponent}, {path: 'new', component: DocumentsEditComponent}, {path: ':id', component: DocumentsDetailComponent}, {path: ':id/edit', component: DocumentsEditComponent}
   ]},
   
   { path: 'messages', component: MessagesComponent },
