@@ -23,7 +23,7 @@
 
   <div class="panel-body">
     <div class="center-panel">
-      <app-documents-item *ngFor="let documentEL of documents; let i = index" [document]="documentEL" [index]="i"></app-documents-item>
+      <app-documents-item *ngFor="let documentEL of documents| documentsFilter: term; let i = index" [document]="documentEL" [index]="i"></app-documents-item>
     </div>
   </div>
 </div>
