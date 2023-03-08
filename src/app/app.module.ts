@@ -26,6 +26,7 @@ import { DocumentsServiceService } from './documents/documents-service.service';
 import { MessagesServiceService } from './messages/messages-service.service';
 import { DocumentsEditComponent } from './documents/documents-edit/documents-edit.component';
 import { ContactsFilterPipe } from './contacts/contacts-filter.pipe';
+import { DocumentsFilterPipe } from './documents/documents-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { ContactsFilterPipe } from './contacts/contacts-filter.pipe';
     ContactsEditComponent,
     DocumentsEditComponent,
     ContactsFilterPipe,
+    DocumentsFilterPipe,
   ],
   imports: [
     BrowserModule,
