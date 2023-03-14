@@ -84,6 +84,7 @@ export class DocumentsServiceService {
     return this.documents[i]
   }
 
+  /*
   addDocument(newDocument: Documents) {
     if (!newDocument) {
         return;
@@ -95,7 +96,31 @@ export class DocumentsServiceService {
     //this.documentListChangedEvent.next(documentsListClone);
     this.storeDocuments(documentsListClone)
   }
+  */
+  addDocument(document: Documents) {
+    if (!document) {
+      return;
+    }
 
+    // make sure id of the new Document is empty
+    document.id = '';
+
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+
+    // add to database
+    this.http.post<{ message: string, document: Documents }>('http://localhost:3000/documents',
+      document,
+      { headers: headers })
+      .subscribe(
+        (responseData) => {
+          // add new document to documents
+          this.documents.push(responseData.document);
+          this.sortAndSend();
+        }
+      );
+  }
+
+  /*
   updateDocument(originalDocument: Documents, newDocument: Documents) {
     if (!originalDocument || !newDocument) {
         return
@@ -110,19 +135,37 @@ export class DocumentsServiceService {
     //this.documentListChangedEvent.next(documentsListClone);
     this.storeDocuments(documentsListClone)
   }
-
-  /*
-  storeDocuments(documents: Documents[]=[]){
-    this.documents = this.getDocuments();
-    this.http.put('https://emma-sangularproject-default-rtdb.firebaseio.com/documents.json', documents)
-    .subscribe((documents: Documents) => {
-      this.documentListChangedEvent.next(this.documents.slice());
-    }, error => {
-      console.error('Error saving documents: ', error);
-    }
-    );
-  }
   */
+
+  updateDocument(originalDocument: Documents, newDocument: Documents) {
+    if (!originalDocument || !newDocument) {
+      return;
+    }
+
+    const pos = this.documents.findIndex(d => d.id === originalDocument.id);
+
+    if (pos < 0) {
+      return;
+    }
+
+    // set the id of the new Document to the id of the old Document
+    newDocument.id = originalDocument.id;
+    newDocument._id = originalDocument._id;
+
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+
+    // update database
+    this.http.put('http://localhost:3000/documents/' + originalDocument.id,
+      newDocument, { headers: headers })
+      .subscribe(
+        (response: Response) => {
+          this.documents[pos] = newDocument;
+          this.sortAndSend();
+        }
+      );
+  }
+
+
   storeDocuments(documents: Documents[]) {
     const documentsString = JSON.stringify(documents);
   
@@ -143,6 +186,7 @@ export class DocumentsServiceService {
     this.documentListChangedEvent.next(this.documents.slice());
   }
 
+  /*
   deleteDocument(document: Documents) {
     if (!document) {
         return;
@@ -155,6 +199,28 @@ export class DocumentsServiceService {
     let documentsListClone = this.documents.slice();
     //this.documentChangedEvent.next(documentsListClone);
     this.storeDocuments(documentsListClone)
+  }
+  */
+  deleteDocument(document: Documents) {
+
+    if (!document) {
+      return;
+    }
+
+    const pos = this.documents.findIndex(d => d.id === document.id);
+
+    if (pos < 0) {
+      return;
+    }
+
+    // delete from database
+    this.http.delete('http://localhost:3000/documents/' + document.id)
+      .subscribe(
+        (response: Response) => {
+          this.documents.splice(pos, 1);
+          this.sortAndSend();
+        }
+      );
   }
 
   getMaxId(): number {

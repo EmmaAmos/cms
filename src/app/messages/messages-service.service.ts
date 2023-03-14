@@ -49,6 +49,7 @@ export class MessagesServiceService {
     return null!;
   }
 
+  /*
   addMessage(messages: Messages) {
     this.messages.push(messages);
     this.messageChanged.emit(this.messages.slice());
@@ -63,7 +64,7 @@ export class MessagesServiceService {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-  
+
     this.http
       .put('https://emma-sangularproject-default-rtdb.firebaseio.com/messages.json', messageString, { headers })
       .subscribe(
@@ -76,6 +77,31 @@ export class MessagesServiceService {
   
     this.messageListChangedEvent.next(this.messages.slice());
   }
+  */
+
+  addMessage(messages: Messages) {
+    if (!messages) {
+      return;
+    }
+
+    // make sure id of the new Document is empty
+    messages.id = '';
+
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+
+    // add to database
+    this.http.post<{ message: string, messages: Messages }>('http://localhost:3000/messages',
+    messages,
+      { headers: headers })
+      .subscribe(
+        (responseData) => {
+          // add new document to documents
+          this.messages.push(responseData.messages);
+          this.sortAndSend();
+        }
+      );
+  }
+
 
   getMaxId(): number {
     let maxId = 0;
