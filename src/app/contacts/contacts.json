@@ -1,13 +1,4 @@
-[
-	{
-		"_id":"283435689650",
-		"id": "101",
-		"name": "yourName",
-		"email": "yourEmail",
-		"phone": "yourPhone",
-		"imageUrl": "yourImageUrl",
-		"group": null
-	},
+[	
 	{
 		"_id":"58c767386f1d58ebc37af1e9",
 		"id": "1",
