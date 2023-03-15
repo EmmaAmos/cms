@@ -1,4 +1,3 @@
-import { Request, Response, NextFunction } from 'express';
 const sequenceGenerator = require('./sequenceGenerator');
 const Contact = require('../models/contacts');
 

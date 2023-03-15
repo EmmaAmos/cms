@@ -92,7 +92,6 @@ router.delete("/:id", (req, res, next) => {
     });
 });
 
-/*
 router.get('/', (req, res, next) => {
   Messages.find()
     .populate('group')
@@ -109,7 +108,6 @@ router.get('/', (req, res, next) => {
       });
     });
 });
-*/
 
 
 module.exports = router; 

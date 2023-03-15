@@ -1,4 +1,3 @@
-import { Request, Response, NextFunction } from 'express';
 const sequenceGenerator = require('./sequenceGenerator');
 const Documents = require('../models/documents');
 var express = require('express');
@@ -7,7 +6,8 @@ var router = express.Router();
 router.get('/', async (req, res, next) => {
     try {
        const documents = await Documents.find();
-       return res.status(200).json({ documents });
+       return res.status(200).json({ documents }, console.log('await Documents is working'));
+
     } catch (error) {
        return res.status(500).json({ error });
     }
@@ -39,7 +39,7 @@ router.get('/', async (req, res, next) => {
  });
 
  router.put('/:id', (req, res, next) => {
-  Documents.findOne({ id: req.params.id })
+  Documents.findOne({ id: req.params.id }, console.log('findOne Documents is working'))
     .then(document => {
       document.name = req.body.name;
       document.description = req.body.description;

@@ -1,4 +1,4 @@
-var Sequence = require('../models/sequences.json');
+var Sequence = require('../models/sequences');
 
 var maxDocumentId;
 var maxMessageId;
@@ -15,7 +15,6 @@ function SequenceGenerator() {
           error: err
         });
       }
-
       sequenceId = sequence._id;
       maxDocumentId = sequence.maxDocumentId;
       maxMessageId = sequence.maxMessageId;
@@ -24,7 +23,7 @@ function SequenceGenerator() {
 }
 
 SequenceGenerator.prototype.nextId = function(collectionType) {
-
+  console.log('SequenceGenerator.prototype.nextId is working')
   var updateObject = {};
   var nextId;
 
