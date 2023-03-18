@@ -1,5 +1,5 @@
 const sequenceGenerator = require('../routes/sequenceGenerator');
-const Messages = require('../models/messages')
+const Messages = require('../model/message')
 var express = require('express');
 var router = express.Router();
 

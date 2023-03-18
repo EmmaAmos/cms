@@ -1,5 +1,5 @@
 const sequenceGenerator = require('./sequenceGenerator');
-const Contact = require('../models/contacts');
+const Contact = require('../model/contact');
 
 var express = require('express');
 var router = express.Router();

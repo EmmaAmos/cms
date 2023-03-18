@@ -1,4 +1,4 @@
-var Sequence = require('../models/sequences');
+var Sequence = require('../model/sequence');
 
 var maxDocumentId;
 var maxMessageId;

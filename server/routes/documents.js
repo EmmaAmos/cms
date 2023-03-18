@@ -1,5 +1,5 @@
 const sequenceGenerator = require('./sequenceGenerator');
-const Documents = require('../models/documents');
+const Documents = require('../model/document');
 var express = require('express');
 var router = express.Router();
 
