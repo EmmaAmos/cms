@@ -2,7 +2,7 @@ import { Component, Directive, forwardRef, OnInit } from '@angular/core';
 import {  FormGroup, NgForm, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
-import { Contact } from '../contact-list/contact-list.model';
+import { Contact } from "../contacts.model";
 import { ContactsServiceService } from '../contacts-service.service';
 
 @Component({
@@ -69,7 +69,7 @@ export class ContactsEditComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     const value = form.value;
-    const newContact = new Contact(value.id, value.name, value.email, value.phone, value.imageUrl, value.group);
+    const newContact = new Contact('',value.id, value.name, value.email, value.phone, value.imageUrl, value.group);
     newContact.id = value.id;
     newContact.name = value.name;
     newContact.email = value.email;

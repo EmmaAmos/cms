@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Contact } from '../contact-list/contact-list.model';
+import { Contact } from '../contacts.model';
 import { ContactsServiceService } from '../contacts-service.service';
 
 
@@ -16,7 +16,7 @@ export class ContactDetailComponent implements OnInit{
   //editMode: boolean = false;
 
   contacts: Contact[] =[
-    new Contact('1', 'R. Kent Jackson', 'jacksonk@byui.edu', '208-496-3771', '../../assets/images/jacksonk.jpg', []),
+    new Contact('0','1', 'R. Kent Jackson', 'jacksonk@byui.edu', '208-496-3771', '../../assets/images/jacksonk.jpg', []),
   ];
 
   constructor( private contactsService: ContactsServiceService, private route: ActivatedRoute, private router: Router) {}

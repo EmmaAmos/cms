@@ -4,7 +4,7 @@ import { providers } from 'ng2-dnd';
 import { catchError, Observable, Subject, tap, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Contact } from './contact-list/contact-list.model';
+import { Contact } from '../contacts/contacts.model';
 import { MOCKCONTACTS } from './MOCKCONTACTS';
 
 @Injectable({
@@ -25,16 +25,17 @@ export class ContactsServiceService {
   maxContactId!: number;
 
   private contacts: Contact[] =[
-    new Contact('1', 'R. Kent Jackson', 'jacksonk@byui.edu', '208-496-3771', '../../assets/images/jacksonk.jpg', []),
-    new Contact('2', 'Rex Barzee', 'barzeer@byui.edu', '208-496-3768', '../../assets/images/barzeer.jpg', [])
+    new Contact('0','1', 'R. Kent Jackson', 'jacksonk@byui.edu', '208-496-3771', '../../assets/images/jacksonk.jpg', []),
+    new Contact('1','2', 'Rex Barzee', 'barzeer@byui.edu', '208-496-3768', '../../assets/images/barzeer.jpg', [])
   ];
   
   getContacts(): Observable<Contact[]>{
     //return this.contacts.slice();
-    return this.http.get<Contact[]>('https://emma-sangularproject-default-rtdb.firebaseio.com/contacts.json')
+    return this.http.get<Contact[]>('http://localhost:3000/contacts')
       .pipe(
         tap((contacts: Contact[]) => {
           this.contacts = contacts;
+          console.log(contacts)
           this.maxContactId = this.getMaxId();
           this.contacts.sort((a, b) => a.name.localeCompare(b.name));
           this.contactsListChangedEvent.next(this.contacts.slice());
@@ -135,7 +136,7 @@ export class ContactsServiceService {
     this.http.put('http://localhost:3000/contacts/' + originalContact.id,
     newContact, { headers: headers })
       .subscribe(
-        (response: Response) => {
+        (response: any) => {
           this.contacts[pos] = newContact;
           this.sortAndSend();
         }
@@ -192,7 +193,7 @@ deleteContact(contacts: Contact) {
   // delete from database
   this.http.delete('http://localhost:3000/contacts/' + contacts.id)
     .subscribe(
-      (response: Response) => {
+      (response: any) => {
         this.contacts.splice(pos, 1);
         this.sortAndSend();
       }
@@ -208,7 +209,21 @@ deleteContact(contacts: Contact) {
         }
     }
     return maxId;
-}
+  }
+
+  sortAndSend(){
+    this.contacts.sort((a,b)=>{
+      if (a.name < b.name) {
+        return -1;
+      }
+      if (a.name > b.name) {
+        return 1;
+      }
+      return 0;
+    });
+    this.contactsListChangedEvent.next(this.contacts.slice())
+  }
+
   constructor(private http: HttpClient){
     this.contacts = MOCKCONTACTS;
     this.maxContactId = this.getMaxId();

@@ -2,7 +2,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { catchError, Observable, Subject, tap, throwError } from 'rxjs';
 import { Documents } from '../documents/documents.model';
 import { MOCKDOCUMENTS } from './MOCKDOCUMENTS';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +20,8 @@ export class DocumentsServiceService {
   maxDocumentId!: number;
 
   private documents: Documents[] =[
-    new Documents('345','Math Worksheet','A quick worksheet for the weekly math assignment','https://www.timestables.com/1-times-table-worksheets.html',[]),
-    new Documents('346','English Worksheet','A quick worksheet for the weekly english assignment','https://www.englishbanana.com/worksheets/categories/elementary-english-worksheets/',[])
+    new Documents('0','345','Math Worksheet','A quick worksheet for the weekly math assignment','https://www.timestables.com/1-times-table-worksheets.html',[]),
+    new Documents('1','346','English Worksheet','A quick worksheet for the weekly english assignment','https://www.englishbanana.com/worksheets/categories/elementary-english-worksheets/',[])
   ]
 
  /*
@@ -46,10 +46,11 @@ export class DocumentsServiceService {
   } */
   //robo code
   getDocuments(): Observable<Documents[]> {
-    return this.http.get<Documents[]>('https://emma-sangularproject-default-rtdb.firebaseio.com/documents.json')
+    return this.http.get<Documents[]>('http://localhost:3000/documents')
       .pipe(
         tap((documents: Documents[]) => {
           this.documents = documents;
+          console.log(documents)
           this.maxDocumentId = this.getMaxId();
           this.documents.sort((a, b) => a.name.localeCompare(b.name));
           this.documentListChangedEvent.next(this.documents.slice());
@@ -158,7 +159,7 @@ export class DocumentsServiceService {
     this.http.put('http://localhost:3000/documents/' + originalDocument.id,
       newDocument, { headers: headers })
       .subscribe(
-        (response: Response) => {
+        (response: any) => {
           this.documents[pos] = newDocument;
           this.sortAndSend();
         }
@@ -174,7 +175,7 @@ export class DocumentsServiceService {
     });
   
     this.http
-      .put('https://emma-sangularproject-default-rtdb.firebaseio.com/documents.json', documentsString, { headers })
+      .put('http://localhost:3000/documents', documentsString, { headers })
       .subscribe(
         (response) => {
           console.log('Documents saved successfully', response);
@@ -216,7 +217,7 @@ export class DocumentsServiceService {
     // delete from database
     this.http.delete('http://localhost:3000/documents/' + document.id)
       .subscribe(
-        (response: Response) => {
+        (response: any) => {
           this.documents.splice(pos, 1);
           this.sortAndSend();
         }
@@ -233,6 +234,19 @@ export class DocumentsServiceService {
     }
     return maxId;
 }
+
+  sortAndSend(){
+    this.documents.sort((a,b)=>{
+      if (a.name < b.name) {
+        return -1;
+      }
+      if (a.name > b.name) {
+        return 1;
+      }
+      return 0;
+    });
+    this.documentListChangedEvent.next(this.documents.slice())
+  }
 
   constructor(private http: HttpClient){
     this.documents = MOCKDOCUMENTS;

@@ -23,11 +23,11 @@ export class MessagesServiceService {
 
   getMessages(): Observable<Messages[]>{
     //return this.messages.slice();
-    return this.http.get<Messages[]>('https://emma-sangularproject-default-rtdb.firebaseio.com/messages.json')
+    return this.http.get<Messages[]>('http://localhost:3000/messages')
     .pipe(
       tap((messages: Messages[])=>{
         this.messages = messages;
-        //console.log(Messages)       
+        console.log(Messages)       
         this.maxMessageId = this.getMaxId();
         //console.log(this.getMaxId)
         this.messages.sort((a, b) => a.subject.localeCompare(b.subject));
@@ -48,36 +48,6 @@ export class MessagesServiceService {
     }
     return null!;
   }
-
-  /*
-  addMessage(messages: Messages) {
-    this.messages.push(messages);
-    this.messageChanged.emit(this.messages.slice());
-    console.log('Message-service-addMessage is working');
-    let messageListClone = this.messages.slice();
-    this.storeMessages(messageListClone)
-  }
-
-  storeMessages(messages: Messages[]) {
-    const messageString = JSON.stringify(messages);
-  
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
-
-    this.http
-      .put('https://emma-sangularproject-default-rtdb.firebaseio.com/messages.json', messageString, { headers })
-      .subscribe(
-        (response) => {
-          console.log('Messages saved successfully', response);
-        }, 
-        (error) => {
-          console.error('Error saving messages: ', error);
-        });
-  
-    this.messageListChangedEvent.next(this.messages.slice());
-  }
-  */
 
   addMessage(messages: Messages) {
     if (!messages) {
@@ -108,10 +78,23 @@ export class MessagesServiceService {
     for (let messages of this.messages) {
         let currentId = parseInt(messages.id);
         if (currentId > maxId) {
-        maxId = currentId;
+          maxId = currentId;
         }
     }
     return maxId;
+}
+
+sortAndSend(){
+  this.messages.sort((a,b)=>{
+    if (a.sender < b.sender) {
+      return -1;
+    }
+    if (a.sender > b.sender) {
+      return 1;
+    }
+    return 0;
+  });
+  this.messageListChangedEvent.next(this.messages.slice())
 }
 
   constructor(private http: HttpClient){

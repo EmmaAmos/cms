@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Contact } from '../contact-list/contact-list.model';
+import { Contact } from '../contacts.model';
 import { ContactsServiceService } from '../contacts-service.service';
 
 @Component({
