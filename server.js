@@ -73,7 +73,7 @@ server.listen(port, function() {
 });
 
 // establish a connection to the mongo database
-mongoose.connect('mongodb+srv://datauser:datauser2@nodeclusterdatabase.lytzrbd.mongodb.net/cmsDataBase', //'mongodb://localhost:27017/cms', 
+mongoose.connect('mongodb://localhost:27017/cmsDatabase',
    { useNewUrlParser: true }, (err, res) => {
       if (err) {
          console.log('Connection failed: ' + err);
