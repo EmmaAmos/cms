@@ -13,7 +13,6 @@ export class MessagesEditComponent {
  constructor(private route: ActivatedRoute, private router: Router){
 
  }
-  @ViewChild('_idInput') ObjectIdInputRef!: ElementRef;
   @ViewChild('idInput') idInputRef!: ElementRef;
   @ViewChild('subjectInput') subjectInputRef!: ElementRef;
   @ViewChild('messageInput') messageInputRef!: ElementRef;
@@ -22,13 +21,12 @@ export class MessagesEditComponent {
 
 
   onAddItem($event: any) {
-    const ing_ID = this.ObjectIdInputRef.nativeElement.value;
     const ingID = this.idInputRef.nativeElement.value;
     const ingSubject = this.subjectInputRef.nativeElement.value;
     const ingMessage = this.messageInputRef.nativeElement.value;
     const ingSender = this.senderInputRef.nativeElement.value;
 
-    const newMessage = new Messages( ing_ID, ingID, ingSubject, ingMessage, ingSender);
+    const newMessage = new Messages( ingID, ingSubject, ingMessage, ingSender);
     this.messageAdded.emit(newMessage);
   }
 
