@@ -5,7 +5,7 @@ var maxMessageId;
 var maxContactId;
 var sequenceId = null;
 
-function SequenceGenerator() {
+function SequenceGenerator(Sequence) {
 
   Sequence.findOne()
     .exec(function(err, sequence) {
