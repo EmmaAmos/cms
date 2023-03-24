@@ -69,7 +69,7 @@ export class ContactsEditComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     const value = form.value;
-    const newContact = new Contact('',value.id, value.name, value.email, value.phone, value.imageUrl, value.group);
+    const newContact = new Contact(value._id, value.id, value.name, value.email, value.phone, value.imageUrl, value.group);
     newContact.id = value.id;
     newContact.name = value.name;
     newContact.email = value.email;
