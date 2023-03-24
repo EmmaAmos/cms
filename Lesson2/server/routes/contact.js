@@ -74,7 +74,7 @@ router.get('/', async (req, res, next) => {
 
 router.delete("/:id", (req, res, next) => {
   Contact.findOne({ id: req.params.id })
-    .then(contact => {
+    .then(contact => { //should this be Contact, on contact?
       Contact.deleteOne({ id: req.params.id })
         .then(result => {
           res.status(204).json({
