@@ -1,7 +1,9 @@
 //robo code
 var Sequence = require('../models/sequence');
 
-var maxDIYId;
+var maxDocumentId;
+var maxMessageId;
+var maxContactId;
 var sequenceId;
 
 function SequenceGenerator() {
