@@ -50,7 +50,7 @@ export class ContactsServiceService {
   */
 
   getContacts(): Observable<Contact[]> {
-    return this.http.get<Contact[]>('http://localhost:3000/contacts').pipe(
+    return this.http.get<Contact[]>('http://localhost:27017/contacts').pipe(
       map((contact: Contact[]) => {
         return contact.map(d => new Contact(d._id, d.id, d.name, d.email, d.phone, d.imageUrl, d.group));
       }),
@@ -87,7 +87,7 @@ export class ContactsServiceService {
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
 
     // add to database
-    this.http.post<{ message: string, contacts: Contact }>('http://localhost:3000/contacts',
+    this.http.post<{ message: string, contacts: Contact }>('http://localhost:27017/contacts',
     contacts,
       { headers: headers })
       .subscribe(
@@ -118,7 +118,7 @@ export class ContactsServiceService {
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
 
     // update database
-    this.http.put('http://localhost:3000/contacts/' + originalContact.id,
+    this.http.put('http://localhost:27017/contacts/' + originalContact.id,
     newContact, { headers: headers })
       .subscribe(
         (response: any) => {
@@ -141,7 +141,7 @@ deleteContact(contacts: Contact) {
   }
 
   // delete from database
-  this.http.delete('http://localhost:3000/contacts/' + contacts.id)
+  this.http.delete('http://localhost:27017/contacts/' + contacts.id)
     .subscribe(
       (response: any) => {
         this.contacts.splice(pos, 1);
