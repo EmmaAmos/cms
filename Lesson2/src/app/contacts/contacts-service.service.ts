@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { providers } from 'ng2-dnd';
-import { catchError, Observable, Subject, tap, throwError } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { catchError, map, Observable, Subject, tap, throwError } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 
 import { Contact } from '../contacts/contacts.model';
 import { MOCKCONTACTS } from './MOCKCONTACTS';
@@ -29,6 +29,7 @@ export class ContactsServiceService {
     new Contact('1','2', 'Rex Barzee', 'barzeer@byui.edu', '208-496-3768', '../../assets/images/barzeer.jpg', [])
   ];
   
+/*
   getContacts(): Observable<Contact[]>{
     //return this.contacts.slice();
     return this.http.get<Contact[]>('http://localhost:3000/contacts')
@@ -46,6 +47,21 @@ export class ContactsServiceService {
         })
       );
   }
+  */
+
+  getContacts(): Observable<Contact[]> {
+    return this.http.get<Contact[]>('http://localhost:3000/contacts').pipe(
+      map((contact: Contact[]) => {
+        return contact.map(d => new Contact(d._id, d.id, d.name, d.email, d.phone, d.imageUrl, d.group));
+      }),
+      catchError((error: HttpErrorResponse) => {
+        console.error(error);
+        return throwError(error);
+      })
+    );
+  }
+  
+
 
   getContact(id: string) : Contact {
     for (let contact of this.contacts) {
@@ -60,19 +76,6 @@ export class ContactsServiceService {
     return this.contacts[id];
   }
 
-  /*
-  addContact(newContact: Contact) {
-    if (!newContact) {
-        return;
-    }
-    this.maxContactId++;
-    newContact.id = this.maxContactId.toString();
-    this.contacts.push(newContact);
-    let contactsListClone = this.contacts.slice();
-    //this.contactsListChangedEvent.next(contactsListClone);
-    this.storeContacts(contactsListClone)
-  }
-  */
   addContact(contacts: Contact) {
     if (!contacts) {
       return;
@@ -96,24 +99,6 @@ export class ContactsServiceService {
       );
   }
 
-/*
-  updateContact(originalContact: Contact, newContact: Contact) {
-    if (!originalContact || !newContact) {
-      console.log('this is '+ originalContact)
-      return;
-    }
-    let pos = this.contacts.indexOf(originalContact);
-    if (pos < 0) {
-      console.log('this is the position of the contact' +pos)
-        return;
-    }
-    newContact.id = originalContact.id;
-    this.contacts[pos] = newContact;
-    let contactsListClone = this.contacts.slice();
-    //this.contactChangedEvent.next(contactsListClone);
-    this.storeContacts(contactsListClone)
-  }
-  */
  
   updateContact(originalContact: Contact, newContact: Contact) {
     if (!originalContact || !newContact) {
@@ -142,41 +127,6 @@ export class ContactsServiceService {
         }
       );
   }
-/*
-  deleteContact(contact: Contact) {
-    if (!contact) {
-        return;
-    }
-    let pos = this.contacts.indexOf(contact);
-    if (pos < 0) {
-        return;
-    }
-    this.contacts.splice(pos, 1);
-    let contactsListClone = this.contacts.slice();
-    //this.contactChangedEvent.next(contactsListClone);
-    this.storeContacts(contactsListClone)
-  }
-
-  storeContacts(contacts: Contact[]) {
-    const contactString = JSON.stringify(contacts);
-  
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
-  
-    this.http
-      .put('https://emma-sangularproject-default-rtdb.firebaseio.com/contacts.json', contactString, { headers })
-      .subscribe(
-        (response) => {
-          console.log('Contact saved successfully', response);
-        }, 
-        (error) => {
-          console.error('Error saving contacts: ', error);
-        });
-  
-    this.contactsListChangedEvent.next(this.contacts.slice());
-  }
-*/
 
 deleteContact(contacts: Contact) {
 
@@ -200,9 +150,11 @@ deleteContact(contacts: Contact) {
     );
 }
 
+/*
   getMaxId(): number {
     let maxId = 0;
     for (let contact of this.contacts) {
+      console.log(this.contacts)
         let currentId = parseInt(contact.id);
         if (currentId > maxId) {
         maxId = currentId;
@@ -210,6 +162,22 @@ deleteContact(contacts: Contact) {
     }
     return maxId;
   }
+  */
+  getMaxId(): number {
+    let maxId = 0;
+    if (Array.isArray(this.contacts)) {
+      for (let contact of this.contacts) {
+        let currentId = parseInt(contact.id);
+        if (currentId > maxId) {
+          maxId = currentId;
+        }
+      }
+    } else {
+      console.error('this.contacts is not an array:', this.contacts);
+    }
+    return maxId;
+  }
+
 
   sortAndSend(){
     this.contacts.sort((a,b)=>{
